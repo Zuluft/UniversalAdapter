@@ -79,22 +79,30 @@ class UniversalPagedListAdapter<T : ItemDrawer>(
         return getItem(itemPosition)!!.isSticky()
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun <P : T> registerClickListener(
         clazz: Class<P>,
-        predicate: (itemDrawer: ItemDrawer, universalViewHolder: UniversalViewHolder) -> Unit
+        predicate: (itemDrawer: P, universalViewHolder: UniversalViewHolder) -> Unit
     ) {
-        itemClickListeners.put(clazz.hashCode(), predicate)
+        itemClickListeners.put(
+            clazz.hashCode(),
+            predicate as ((ItemDrawer, UniversalViewHolder) -> Unit)?
+        )
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun <P : T> registerClickListener(
         clazz: Class<P>,
         viewId: Int,
-        predicate: (itemDrawer: ItemDrawer, universalViewHolder: UniversalViewHolder) -> Unit
+        predicate: (itemDrawer: P, universalViewHolder: UniversalViewHolder) -> Unit
     ) {
         if (itemViewClickListeners[clazz.hashCode()] == null) {
             itemViewClickListeners.put(clazz.hashCode(), SparseArray())
         }
-        itemViewClickListeners[clazz.hashCode()].put(viewId, predicate)
+        itemViewClickListeners[clazz.hashCode()].put(
+            viewId,
+            predicate as ((ItemDrawer, UniversalViewHolder) -> Unit)?
+        )
     }
 
 

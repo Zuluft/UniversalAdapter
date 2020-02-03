@@ -8,11 +8,11 @@ interface ItemClickListener<T : ItemDrawer> {
 
     fun <P : T> registerClickListener(
         clazz: Class<P>,
-        predicate: (itemDrawer: ItemDrawer, universalViewHolder: UniversalViewHolder) -> (Unit)
+        predicate: (itemDrawer: P, universalViewHolder: UniversalViewHolder) -> (Unit)
     )
 
     fun <P : T> registerClickListener(
         clazz: Class<P>, @IdRes viewId: Int,
-        predicate: (itemDrawer: ItemDrawer, universalViewHolder: UniversalViewHolder) -> (Unit)
+        predicate: (itemDrawer: P, universalViewHolder: UniversalViewHolder) -> (Unit)
     )
 }

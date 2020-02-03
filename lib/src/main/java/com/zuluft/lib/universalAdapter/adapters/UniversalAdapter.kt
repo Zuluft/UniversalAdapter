@@ -4,6 +4,7 @@ import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.core.util.forEach
 import androidx.recyclerview.widget.DiffUtil
@@ -22,10 +23,10 @@ class UniversalAdapter<T : ItemDrawer> constructor(
     private val currentItems = mutableListOf<T>()
 
     private val itemClickListeners =
-        SparseArray<(drawer: ItemDrawer, holder: UniversalViewHolder) -> Unit>()
+        SparseArray<(drawer: T, holder: UniversalViewHolder) -> Unit>()
 
     private val itemViewClickListeners =
-        SparseArray<SparseArray<(drawer: ItemDrawer, UniversalViewHolder) -> Unit>>()
+        SparseArray<SparseArray<(drawer: T, UniversalViewHolder) -> Unit>>()
 
     override fun onCreateViewHolder(parent: ViewGroup, @LayoutRes layoutId: Int): UniversalViewHolder {
         return UniversalViewHolder(
@@ -133,21 +134,25 @@ class UniversalAdapter<T : ItemDrawer> constructor(
         return currentItems[itemPosition].isSticky()
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun <P : T> registerClickListener(
         clazz: Class<P>,
-        predicate: (itemDrawer: ItemDrawer, universalViewHolder: UniversalViewHolder) -> Unit
+        predicate: (itemDrawer: P, universalViewHolder: UniversalViewHolder) -> Unit
     ) {
-        itemClickListeners.put(clazz.hashCode(), predicate)
+        itemClickListeners.put(clazz.hashCode(), predicate as ((T, UniversalViewHolder) -> Unit)?)
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun <P : T> registerClickListener(
-        clazz: Class<P>,
-        viewId: Int,
-        predicate: (itemDrawer: ItemDrawer, universalViewHolder: UniversalViewHolder) -> Unit
+        clazz: Class<P>, @IdRes viewId: Int,
+        predicate: (itemDrawer: P, universalViewHolder: UniversalViewHolder) -> Unit
     ) {
         if (itemViewClickListeners[clazz.hashCode()] == null) {
             itemViewClickListeners.put(clazz.hashCode(), SparseArray())
         }
-        itemViewClickListeners[clazz.hashCode()].put(viewId, predicate)
+        itemViewClickListeners[clazz.hashCode()].put(
+            viewId,
+            predicate as ((T, UniversalViewHolder) -> Unit)?
+        )
     }
 }
