@@ -46,7 +46,7 @@ class UniversalAdapter<T : ItemDrawer> constructor(
             }
         }
         itemViewClickListeners[item.javaClass.hashCode()]?.apply {
-            forEach { key, value ->
+            forEach { key, _ ->
                 holder.itemView.findViewById<View>(key).setOnClickListener {
                     get(key)!!.invoke(item, holder)
                 }

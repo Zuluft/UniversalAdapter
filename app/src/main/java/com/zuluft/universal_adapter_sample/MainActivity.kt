@@ -50,18 +50,8 @@ class MainActivity : AppCompatActivity() {
         universalAdapter.insert(TestItemDrawer("zzzzz3"), false)
         universalAdapter.registerClickListener(TestItemDrawer::class.java)
         { testItemDrawer: TestItemDrawer, _: UniversalViewHolder ->
-
-
+            Toast.makeText(this, testItemDrawer.text, Toast.LENGTH_SHORT).show()
         }
-        universalAdapter.registerClickListener(TestItemDrawer::class.java, R.id.tvTest)
-        { itemDrawer: ItemDrawer, universalViewHolder: UniversalViewHolder ->
-            Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show()
-        }
-        universalAdapter.registerClickListener(TestHeaderDrawer::class.java)
-        { itemDrawer: ItemDrawer, universalViewHolder: UniversalViewHolder ->
-            Toast.makeText(this, "Header", Toast.LENGTH_SHORT).show()
-        }
-
 
     }
 }
