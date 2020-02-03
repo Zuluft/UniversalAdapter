@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         recyclerView.layoutManager = LinearLayoutManager(this)
+
+
         val universalAdapter =
             UniversalAdapterBuilder.of(ItemDrawer::class.java)
                 .setAreContentsTheSameCallback { _, _ ->
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
                 .buildAdapterWith(recyclerView)
+        universalAdapter.insert(TestHeaderDrawer(), false)
         universalAdapter.insert(TestItemDrawer("zzzzz0"), false)
         universalAdapter.insert(TestItemDrawer("zzzzz1"), false)
         universalAdapter.insert(TestItemDrawer("zzzzz2"), false)
