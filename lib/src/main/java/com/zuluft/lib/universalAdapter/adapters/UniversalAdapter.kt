@@ -155,4 +155,17 @@ class UniversalAdapter<T : ItemDrawer> constructor(
             predicate as ((T, UniversalViewHolder) -> Unit)?
         )
     }
+
+    override fun getItemDrawerAt(position: Int): T {
+        return currentItems[position]
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <P : T> findLastItemOfType(type: Class<P>): P? {
+        return currentItems.findLast {
+            type.isInstance(it)
+        } as P
+    }
+
+
 }

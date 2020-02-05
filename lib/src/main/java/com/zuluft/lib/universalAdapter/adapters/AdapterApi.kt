@@ -14,5 +14,9 @@ interface AdapterApi<T : ItemDrawer> {
 
     fun updateAll(items: List<T>, detectMoves: Boolean)
 
+    fun getItemDrawerAt(position: Int): T
+
+    fun <P : T> findLastItemOfType(type: Class<P>): P?
+
 
 }
