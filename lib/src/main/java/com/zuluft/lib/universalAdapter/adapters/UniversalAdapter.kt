@@ -167,5 +167,11 @@ class UniversalAdapter<T : ItemDrawer> constructor(
         } as P
     }
 
+    override fun insertAndUpdate(items: List<T>) {
+        updateAll(ArrayList(currentItems).apply {
+            addAll(items)
+        }, false)
+    }
+
 
 }

@@ -10,6 +10,8 @@ interface AdapterApi<T : ItemDrawer> {
 
     fun insertAll(items: List<T>, notify: Boolean)
 
+    fun insertAndUpdate(items: List<T>)
+
     fun removeAll(notify: Boolean)
 
     fun updateAll(items: List<T>, detectMoves: Boolean)
