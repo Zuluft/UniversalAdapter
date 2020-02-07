@@ -173,5 +173,9 @@ class UniversalAdapter<T : ItemDrawer> constructor(
         }, true)
     }
 
+    override fun getAll(): List<T> {
+        return currentItems
+    }
+
 
 }

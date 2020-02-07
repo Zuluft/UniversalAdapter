@@ -20,5 +20,6 @@ interface AdapterApi<T : ItemDrawer> {
 
     fun <P : T> findLastItemOfType(type: Class<P>): P?
 
+    fun getAll(): List<T>
 
 }
